@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezpiro-m <ezpiro-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 12:46:21 by ezpiro-m          #+#    #+#             */
-/*   Updated: 2023/02/19 12:53:59 by ezpiro-m         ###   ########.fr       */
+/*   Updated: 2023/02/22 05:04:33 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "../includes/libft/libft.h"
-# include "../includes/libmlx/mlx.h"
+# include "../includes/libft.h"
+# include "../includes/mlx.h"
 // # include "basics.h"
 // # include "elements.h"
 // # include "scene.h"
@@ -27,7 +27,7 @@
 # include <time.h>
 # include <unistd.h>
 # include <stdbool.h>
-#include <stdio.h>
+# include <stdio.h>
 
 # ifndef THREADS
 #  define THREADS 1
@@ -77,28 +77,61 @@
 #  define KEY_MINUS	78
 # endif
 
-typedef struct		s_mlx
+
+typedef struct s_3D_vector {
+	double x;
+	double y;
+	double z;
+} t_3dv;
+typedef struct s_mlx
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
 }					t_mlx;
 
-typedef struct		s_img
+typedef struct s_img
 {
 	void			*img_ptr;
- 	int				bits_per_pixel;
+	int				bits_per_pixel;
 	int				size_line;
 	int				endian;
 	unsigned char	*data;
 }					t_img;
 
-typedef struct	s_window
+
+typedef struct s_scene
+{
+	t_aabb	aabb;
+}	t_scene;
+
+typedef struct s_window
 {
 	t_mlx		*mlx;
 	t_img		*img;
 	t_scene		*scene;
 }				t_window;
 
+/*
+* Shape types
+*/
+
+typedef enum s_shape_type {
+	sphere,
+	plan,
+	cylinder,
+	square,
+	triangle,
+	nein
+}	t_st;
+
+/*
+* Axis aligned bounding box
+*/
+typedef struct s_aabb
+{
+	t_3dv	min;
+	t_3dv	max;
+}	t_aabb;
 
 
 #endif
