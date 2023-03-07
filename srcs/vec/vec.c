@@ -6,11 +6,11 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 05:01:52 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/03/02 05:19:13 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/03/07 06:14:24 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "./vec.h"
 
 void	vec_init(t_vec3 *vec3)
 {
@@ -20,34 +20,35 @@ void	vec_init(t_vec3 *vec3)
 	return ;
 }
 
-void	vec_addition(t_vec3 *vec, t_vec3 *to_add)
+t_vec3	vec_addition(t_vec3 u, t_vec3 v)
 {
-	vec->x += to_add->x;
-	vec->y += to_add->y;
-	vec->z += to_add->z;
-	return ;
+	t_vec3	vec;
+
+	vec.x = u.x + v.x;
+	vec.z = u.z + v.z;
+	vec.y = u.y + v.y;
+	return (vec);
 }
 
-void	vec_multi(t_vec3 *vec, t_vec3 *to_multi)
+t_vec3	vec_multi(t_vec3 u, t_vec3 v)
 {
-	vec->x *= to_multi->x;
-	vec->y *= to_multi->y;
-	vec->z *= to_multi->z;
-	return ;
+	t_vec3	vec;
+
+	vec.x = u.x * v.x;
+	vec.z = u.z * v.z;
+	vec.y = u.y * v.y;
+	return (vec);
 }
 
-void	vec_div(t_vec3 *vec, t_vec3 *to_div)
+t_vec3	vec_multi_with_d(t_vec3 vec, double t)
 {
-	vec->x /= to_div->x;
-	vec->y /= to_div->y;
-	vec->z /= to_div->z;
-	return ;
+	vec.x *= t;
+	vec.y *= t;
+	vec.z *= t;
+	return (vec);
 }
 
-void	vec_minus(t_vec3 *vec, t_vec3 *to_minus)
+t_vec3	vec_div(t_vec3 vec, double t)
 {
-	vec->x -= to_minus->x;
-	vec->y -= to_minus->y;
-	vec->z -= to_minus->z;
-	return ;
+	return (vec_multi_with_d(vec, 1 / t));
 }

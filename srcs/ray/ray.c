@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 04:42:20 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/03/07 05:13:07 by rkanmado         ###   ########.fr       */
+/*   Created: 2023/03/07 03:41:14 by rkanmado          #+#    #+#             */
+/*   Updated: 2023/03/07 05:12:48 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "../minirt.h"
 
-# include "./vec/vec.h"
-# include "./color/col.h"
-# include "./ray/ray.h"
+void	set_ray(t_ray *ray, t_vec3 dir, t_vec3 orig)
+{
+	ray->dir = dir;
+	ray->orig = orig;
+	return ;
+}
 
-#endif
+void	init_ray(t_ray *ray)
+{
+	vec_init(&ray->dir);
+	vec_init(&ray->orig);
+	return ;
+}
+
+t_vec3	ray_at(t_vec3 *u, t_vec3 *v, double t)
+{
+	t_vec3	newdir;
+
+	newdir = vec_multi_with_d(v, t);
+	return (vec_addition(u, &newdir));
+}

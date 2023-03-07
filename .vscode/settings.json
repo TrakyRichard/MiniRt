@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "mlx.h": "c",
-        "minirt.h": "c",
-        "iostream": "cpp",
-        "parser.h": "c"
-    }
-}
