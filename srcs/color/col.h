@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 04:20:44 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/03/07 04:22:54 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:25:13 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_rgb	col_multi(t_rgb *u, t_rgb *v);
 t_rgb	col_div(t_rgb *vec, double t);
 t_rgb	col_minus(t_rgb *u, t_rgb *v);
 double	col_len_squared(t_rgb *vec);
-double	length(t_rgb *vec);
+double	rgb_length(t_rgb *vec);
 t_rgb	col_multi_with_d(t_rgb *vec, double t);
 t_rgb	set_col(double x, double y, double z);
 

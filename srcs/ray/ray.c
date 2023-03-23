@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 03:41:14 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/03/07 05:12:48 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:22:34 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ t_vec3	ray_at(t_vec3 *u, t_vec3 *v, double t)
 {
 	t_vec3	newdir;
 
-	newdir = vec_multi_with_d(v, t);
-	return (vec_addition(u, &newdir));
+	newdir = vec_multi_with_d(*v, t);
+	return (vec_addition(*u, newdir));
 }

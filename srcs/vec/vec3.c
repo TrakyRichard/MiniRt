@@ -12,13 +12,13 @@
 
 #include "./vec.h"
 
-t_vec3	vec_minus(t_vec3 *u, t_vec3 *v)
+t_vec3	vec_minus(t_vec3 u, t_vec3 v)
 {
 	t_vec3	vec;
 
-	vec.x = u->x - v->x;
-	vec.z = u->z - v->z;
-	vec.y = u->y - v->y;
+	vec.x = u.x - v.x;
+	vec.z = u.z - v.z;
+	vec.y = u.y - v.y;
 	return (vec);
 }
 

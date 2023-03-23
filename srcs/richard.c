@@ -24,9 +24,16 @@ void	write_color(t_rgb color)
 	return ;
 }
 
+t_vec3 ray_color(t_ray *ray)
+{
+	t_vec3	unit_direction = vec_init(r->dir);
+	t_vec3	t = 0.5*(unit_direction.y + 1.0);
+	return vec_addition()
+}
+
 int	main(void)
 {
-	const int	img_width = 256;
+/* 	const int	img_width = 256;
 	const int	img_height = 256;
 
 	printf("P3\n%d %d\n255\n", img_width, img_height);
@@ -37,6 +44,8 @@ int	main(void)
 			write_color(set_vec((double)i / (img_width - 1), \
 			(double)j / (img_height - 1), 0.25));
 		}
-	}
+	} */
+
+
 
 }
