@@ -21,5 +21,5 @@ void init_mini_rt(t_mrt *mrt)
 	vec_init(&mrt->origin);
 	mrt->hor = set_vec(mrt->iw, 0, 0);
 	mrt->ver = set_vec(0, mrt->ih, 0);
-
+	mrt->lower_lc = vec_minus(vec_minus(vec_minus(mrt->origin, vec_div(mrt->hor, 2)), vec_div(mrt->ver, 2)), set_vec(0, 0, mrt->fl));
 }
