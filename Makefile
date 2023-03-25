@@ -1,33 +1,31 @@
 NAME	= miniRT
 
 INCLDIR	= includes/
+LIB = libs/
 
 SRCDIR	= srcs/
+COLORDIR = color/
+RAYDIR = ray/
+VECDIR = vec/
 
-LIB = includes/
+SRCFILES=	$(COLORDIR)col_ops.c		\
+			$(COLORDIR)col_utils.c		\
+			$(COLORDIR)col_inits.c		\
+			$(VECDIR)vec_ops.c			\
+			$(VECDIR)vec_utils.c		\
+			$(VECDIR)vec_inits.c		\
+			$(RAYDIR)ray.c				\
+			render.c					\
+			richard.c					\
+			init.c
 
-SRCFILES=	color.c					\
-			error.c					\
-			main.c					\
-			make_img.c				\
-			parse.c					\
-			ray.c					\
-			save_bmp.c				\
-			set_elements.c			\
-			set_elements2.c			\
-			utils.c					\
-			vector.c				\
-
-
-INCLFILES=	minirt.h		\
 
 SRCS	= $(addprefix $(SRCDIR), $(SRCFILES))
 OBJS	= $(SRCS:.c=.o)
-INCLS	= $(addprefix $(INCLDIR), $(INCLFILES))
-CC		= gcc -g
+CC		= gcc -g3
 RM		= rm -f
 
-CFLAGS	= -I $(INCLDIR) -DTHREADS=$(THREADS) -Wall -Wextra -fsanitize=address -g3#-Werror -Ofast
+CFLAGS	=-DTHREADS=$(THREADS) -g3 -Wall -Wextra -fsanitize=address -Werror -Ofast
 FLAGS = -L $(LIB)libft -lft -L $(LIB)libmlx -lmlx
 
 MACOS_MACRO = -DMACOS
@@ -48,29 +46,36 @@ ifeq ($(UNAME),Linux)
 	FLAGS += $(LINUX_FLAGS)
 endif
 
-$(NAME) : compilelibft compilelibmlx $(OBJS) $(INCLS)
-	$(CC) $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
-
 all:		$(NAME)
 
-compilelibft :
+$(NAME) : compilelibft compilelibmlx $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
+
+compilelibft:
 	make -C $(LIB)libft all
 
-compilelibmlx :
+compilelibmlx:
 	make -C $(LIB)libmlx all
 
-%.o: %.c $(INCLS)
-	$(CC) $(CFLAGS) -c -I $(INCLDIR) -o $@ $<
+cleanlibft:
+	make -C $(LIB)libft clean
 
+cleanlibmlx:
+	make -C $(LIB)libmlx clean
 
-clean:
-			make clean -C $(LIB)libft
-			# make clean -C $(LIB)libvector
+fcleanlibft:
+	make -C $(LIB)libft fclean
+
+fcleanlibmlx:
+	make -C $(LIB)libmlx clean
+
+# %.o: %.c
+# 	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:	cleanlibft cleanlibmlx
 			$(RM) $(OBJS)
 
-fclean:		clean
-			make fclean -C $(LIB)libft
-			# make fclean -C $(LIB)libvector
+fclean:	clean fcleanlibft fcleanlibmlx
 			$(RM) $(NAME)
 
 re:			fclean all

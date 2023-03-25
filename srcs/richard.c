@@ -6,34 +6,26 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 05:10:28 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/03/07 03:51:26 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/03/25 06:18:08 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h>
-#include "./parser/parser.h"
 
-/* Write the translated [0, 255] of each color component */
-void	write_color(t_rgb color)
-{
-	printf("%d ", (int)(255.999 * color.x));
-	printf("%d ", (int)(255.999 * color.y));
-	printf("%d", (int)(255.999 * color.z));
-	printf("\n");
-	return ;
-}
-
-t_vec3 ray_color(t_ray *ray)
-{
-	t_vec3	unit_direction = vec_init(r->dir);
-	t_vec3	t = 0.5*(unit_direction.y + 1.0);
-	return vec_addition()
-}
 
 int	main(void)
 {
-/* 	const int	img_width = 256;
+	t_mrt	mrt;
+
+	init_mini_rt(&mrt);
+	render(&mrt);
+}
+
+
+/* Write the translated [0, 255] of each color component */
+void	render_color(void)
+{
+	const int	img_width = 256;
 	const int	img_height = 256;
 
 	printf("P3\n%d %d\n255\n", img_width, img_height);
@@ -41,11 +33,8 @@ int	main(void)
 	{
 		for (int i = 0; i < img_width; ++i)
 		{
-			write_color(set_vec((double)i / (img_width - 1), \
+			write_color(set_col((double)i / (img_width - 1), \
 			(double)j / (img_height - 1), 0.25));
 		}
-	} */
-
-
-
+	}
 }
