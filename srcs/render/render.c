@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 04:47:19 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/07/13 07:29:10 by richard          ###   ########.fr       */
+/*   Updated: 2023/07/19 04:12:28 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
 
-void ft_put_pixel(unsigned char *data, int x, int y, const int color, const t_r resolution)
+void    ft_put_pixel(unsigned char *data, int x, int y, const int color, const t_r resolution)
 {
     int(*tab)[resolution.w][1]; // prepare the cast
 

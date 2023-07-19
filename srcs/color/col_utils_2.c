@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_inits.c                                        :+:      :+:    :+:   */
+/*   col_init_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 04:47:19 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/07/19 04:48:45 by rkanmado         ###   ########.fr       */
+/*   Created: 2023/07/18 21:34:31 by rkanmado          #+#    #+#             */
+/*   Updated: 2023/07/18 21:36:51 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
 
-void	vec_init(t_vec3 *vec3)
+t_rgb	mult_rgb_rgb(const t_rgb rgb, const t_rgb mult)
 {
-	vec3->x = 0;
-	vec3->y = 0;
-	vec3->z = 0;
-	return ;
-}
-
-t_b	are_vecs_egal(t_vec3 vec1, t_vec3 vec2)
-{
-	if (vec1.x == vec2.x && vec1.y == vec2.y && vec1.z == vec2.z)
-		return (true);
-	return (false);
-}
-
-t_vec3	set_vec(double x, double y, double z)
-{
-	t_vec3	vec;
-
-	vec.x = x;
-	vec.y = y;
-	vec.z = z;
-	return (vec);
+	return (set_col(rgb.r * (mult.r / 255.), \
+	rgb.g * (mult.g / 255.), rgb.b * (mult.b / 255.)));
 }

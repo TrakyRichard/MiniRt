@@ -16,11 +16,13 @@ RENDER = render/
 SRCFILES=	$(COLORDIR)col_ops.c				\
 			$(COLORDIR)col_utils.c				\
 			$(COLORDIR)col_inits.c				\
+			$(COLORDIR)col_utils_2.c			\
 			$(VECDIR)vec_ops.c					\
 			$(VECDIR)vec_utils.c				\
 			$(VECDIR)vec_inits.c				\
 			$(RAYDIR)ray.c						\
 			$(RAYDIR)get_shape_ray.c			\
+			$(RAYDIR)get_shape_ray_2			\
 			$(PARSERDIR)parser.c				\
 			$(PARSERDIR)parse_elmts_2.c			\
 			$(PARSERDIR)parse_elmts.c			\
@@ -40,7 +42,7 @@ SRCFILES=	$(COLORDIR)col_ops.c				\
 			$(RENDER)render.c					\
 			$(RENDER)light.c					\
 			test.c								\
-			main.c									
+			main.c
 
 
 # INCLFILES=	srcs/parser/parser.h	\

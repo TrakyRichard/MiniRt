@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 03:41:14 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/06/25 15:26:20 by richard          ###   ########.fr       */
+/*   Updated: 2023/07/19 03:53:58 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	set_ray(t_ray *ray, t_vec3 dir, t_vec3 orig, double t)
 	return ;
 }
 
-t_b are_rays_egal(t_ray ray1, t_ray ray2)
+t_b	are_rays_egal(t_ray ray1, t_ray ray2)
 {
-	if (are_vecs_egal(ray1.dir, ray2.dir) && are_vecs_egal(ray1.orig, ray2.orig) && ray1.t == ray2.t)
+	if (are_vecs_egal(ray1.dir, ray2.dir) && are_vecs_egal(ray1.orig, \
+	ray2.orig) && ray1.t == ray2.t)
 		return (true);
 	return (false);
 }
