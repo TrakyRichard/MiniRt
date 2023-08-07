@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "*.ts": "typescript",
+        "minirt.h": "c",
+        "shape.h": "c",
+        "parse.h": "c",
+        "intersection.h": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "bitset": "c",
+        "initializer_list": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "ray.h": "c",
+        "get_next_line.h": "c",
+        "mlx.h": "c",
+        "functional": "c",
+        "iterator": "c",
+        "locale": "c",
+        "string": "c",
+        "stdio.h": "c"
+    }
+}
