@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 03:55:06 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 02:17:32 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:05:25 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@
 #include "../color/col.h"
 #include "../ray/ray.h"
 
-void	adding_albedo(t_manage_light *el, t_b in_shadow, \
+void	adding_albedo(t_manage_light *el, \
 t_rgb *color, t_sc *scene)
 {
-	if (in_shadow)
-		el->diffuse = set_col(0, 0, 0);
-	else
-		el->diffuse = col_multi_with_d(el->diffuse, ALBEDO);
+	el->diffuse = col_multi_with_d(el->diffuse, ALBEDO);
 	*color = mult_rgb_rgb(add_rgb_rgb(scene->a.color, el->diffuse), *color);
 	min_rgb(color);
 }
@@ -30,6 +27,9 @@ t_rgb *color, t_sc *scene)
 void	check_if_shape_in_shadow(t_intx *intx, t_b *in_shadow, \
 t_intx *shadow_intx, t_sh *shapes)
 {
+	shadow_intx->ray.t = INFINITY;
+	shadow_intx->ray = intx->ray;
+	shadow_intx->t = INFINITY;
 	while (shapes)
 	{
 		if (shapes->i != intx->i && intersect_shape(shadow_intx, shapes))
@@ -74,17 +74,20 @@ t_rgb	*manage_light(t_sc *scene, t_intx *intx, t_rgb *color)
 
 	in_shadow = false;
 	shapes = scene->shapes.head;
+
+	(void)	shapes;
 	el.diffuse = set_col(0, 0, 0);
 	el.lights = scene->l.head;
+	shadow_intx.ray = intx->ray;
 	while (el.lights)
 	{
 		el.light = (t_l *)(el.lights->i);
 		set_ray(&el.to_light, vec_minus(el.light->pos, get_shape_org(intx)), \
 			get_shape_org(intx), INFINITY);
-		check_if_shape_in_shadow(intx, &in_shadow, &shadow_intx, shapes);
+		// check_if_shape_in_shadow(intx, &in_shadow, &shadow_intx, shapes);
 		additional_computation_for_shadow(&el, intx, in_shadow);
 		el.lights = el.lights->next;
 	}
-	adding_albedo(&el, in_shadow, color, scene);
+	adding_albedo(&el, color, scene);
 	return (color);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 12:20:26 by ezpiro-m          #+#    #+#             */
-/*   Updated: 2023/08/06 23:50:48 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:31:43 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ int	close_function(t_sc *sc)
 {
 	mlx_clear_window(sc->mlx->mlx_ptr, sc->mlx->win_ptr);
 	mlx_destroy_window(sc->mlx->mlx_ptr, sc->mlx->win_ptr);
+	free_scene(sc);
 	exit(0);
 }
 
 int	key_function(const int keycode, t_sc *sc)
 {
 	printf("%i\n", keycode);
-	if (keycode == ESC || keycode == KEY_Q)
+	if (keycode == ESC || keycode == KEY_Q || keycode == 53)
 		close_function(sc);
 	else if (keycode == LEFT)
 	{

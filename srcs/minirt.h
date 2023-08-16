@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 04:42:20 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 01:05:29 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/13 14:30:16 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define RAY_T_MAX 1.0e30
 # define EPSILON 0.000001
 # define ALBEDO 0.3
+# define FOCAL_DIST 0.5
 
 # define REFLEC 1
 # define DEPTH 1
@@ -172,12 +173,15 @@ typedef struct s_sphere_intersect
 
 typedef struct s_square_intersection
 {
-	t_vec3	v1;
-	t_vec3	v2;
-	t_vec3	v3;
-	t_vec3	v4;
-	t_vec3	p;
 	double	t;
+	t_vec3	edge1;
+	t_vec3	edge2;
+	t_vec3 intersection_point;
+	t_vec3	v;
+	double	width;
+	double	height;
+	double	proj1;
+	double	proj2;
 }		t_sq_intx;
 
 typedef struct s_cylinder_intersect
@@ -317,12 +321,12 @@ void	write_color(t_rgb color);
 int		rgb_to_int(const t_rgb rgb);
 
 /* Error */
-void	ft_error(char *str);
+t_b		ft_error(char *str);
 void	check_args(int arc, char **args);
 
 /* File */
 int		open_file(char *file);
-
+void	quit_if_parsing_failed(t_sc *sc);
 /* Utils */
 void	skip_spaces(char *line, int *i);
 void	set_next_int(char *line, int *i, int *value);
@@ -335,6 +339,8 @@ int		ft_min_int(int a, int b);
 t_rgb	add_rgb_rgb(const t_rgb rgb, const t_rgb add);
 void	min_rgb(t_rgb *color);
 float	ft_max_float(const float a, const float b);
+size_t	split_length(char **split_array);
+t_b		ft_split_error(char *str, char **split_array, char *line);
 
 /* List Ops */
 void	ft_unshift(t_st *stack, void *info, t_shtype type);
@@ -361,5 +367,9 @@ t_b		intersect_square(t_intx *intx, t_sq *square);
 t_b		intersect_plane(t_intx *intx, t_pl *plane);
 t_b		intersect_sphere(t_intx *intx, t_sp *sphere);
 t_rgb	calculate_color(t_intx intersection);
+
+/* shape_function */
+void	ft_free_shape(t_st *shape);
+void	free_scene(t_sc *scene);
 
 #endif

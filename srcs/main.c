@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 12:25:14 by ezpiro-m          #+#    #+#             */
-/*   Updated: 2023/08/07 01:52:27 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/13 11:51:02 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,27 @@ int	rgb_to_int(const t_rgb rgb)
 	return (((rgb.r & 0xFF) << 16) | ((rgb.g & 0xFF) << 8) | (rgb.b & 0xFF));
 }
 
+void quit_if_parsing_failed(t_sc *sc)
+{
+	t_b is_done;
+
+	is_done = true;
+	if (sc->r.h == 0 || sc->r.w == 0)
+		is_done = ft_error("Resolution not found");
+	if (sc->a.ratio == 0)
+		is_done = ft_error("Ambient light not found");
+	if (sc->a.color.r == -1 || sc->a.color.g == -1 || sc->a.color.b == -1)
+		is_done = ft_error("Ambient light color not found");
+	if (sc->shapes.size == 0)
+		is_done = ft_error("No shapes found");
+	if (sc->c.fov == 0)
+		is_done = ft_error("Camera FOV not found");
+	if (sc->l.size == 0)
+		is_done = ft_error("No lights found");
+	if (is_done == false)
+		exit(1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_sc	sc;
@@ -34,7 +55,9 @@ int	main(int argc, char **argv)
 	check_args(argc, argv);
 	init_scene(&sc);
 	fd = open_file(argv[1]);
-	parse(fd, &sc);
+	if (parse(fd, &sc) == false)
+		return (1);
+	quit_if_parsing_failed(&sc);
 	malloc_mlx_init(&sc);
 	init_img(&sc);
 	close(fd);
@@ -51,5 +74,6 @@ int	main(int argc, char **argv)
 		sc.img->img_ptr, 0, 0);
 		get_controls_loop(sc.mlx, &sc);
 	}
+	free_scene(&sc);
 	return (0);
 }

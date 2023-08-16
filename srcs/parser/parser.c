@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 04:20:44 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 01:18:54 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/13 12:31:03 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
 #include "parser.h"
 
-void	parsing_process(char *line, t_sc *sc)
+t_b	parsing_process(char *line, t_sc *sc)
 {
 	if (line[0] == 'R')
-		parse_resolution(line, sc);
+		return (parse_resolution(line, sc));
 	else if (line[0] == 'A')
-		parse_ambient(line, sc);
+		return (parse_ambient(line, sc));
 	else if (line[0] == 'c' && line[1] == 'y')
-		parse_cylinder(line, sc);
-	else if (line[0] == 'c' && (line[1] == ' ' || line[1] == '\t'))
-		parse_camera(line, sc);
-	else if (line[0] == 'l')
-		parse_light(line, sc);
+		return (parse_cylinder(line, sc));
+	else if (ft_tolower(line[0]) == 'c' && (line[1] == ' ' || line[1] == '\t'))
+		return (parse_camera(line, sc));
+	else if (ft_tolower(line[0]) == 'l' && (line[1] == ' ' || line[1] == '\t'))
+		return (parse_light(line, sc));
 	else if (line[0] == 's' && line[1] == 'p')
-		parse_sphere(line, sc);
+		return (parse_sphere(line, sc));
 	else if (line[0] == 'p' && line[1] == 'l')
-		parse_plane(line, sc);
+		return (parse_plane(line, sc));
 	else if (line[0] == 's' && line[1] == 'q')
-		parse_square(line, sc);
+		return (parse_square(line, sc));
 	else if (line[0] == 't' && line[1] == 'r')
-		parse_triangle(line, sc);
+		return (parse_triangle(line, sc));
 	else
-		return ;
+		return (false);
 }
 
-void	parse(int fd, t_sc *sc)
+t_b	parse(int fd, t_sc *sc)
 {
 	char	*line;
 	int		count;
@@ -46,8 +46,6 @@ void	parse(int fd, t_sc *sc)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		if (count > 3)
-			break ;
 		if (*line == '\n')
 			count++ ;
 		if (line[0] == '#' || *line == '\n')
@@ -56,10 +54,17 @@ void	parse(int fd, t_sc *sc)
 			line = get_next_line(fd);
 			continue ;
 		}
-		parsing_process(line, sc);
+		if (count > 3 || line[0] == '\0')
+			break ;
+		if (parsing_process(line, sc) == false)
+		{
+			free_scene(sc);
+			return (ft_error("Parsing error\n"));
+		}
 		count = 0;
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
+	return (true);
 }

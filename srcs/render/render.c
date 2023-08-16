@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 04:47:19 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 02:27:35 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:45:12 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,44 @@ t_vec3	set_vect_dir_cam(const t_c *cam, const double i, const double j)
 	return (normalized(dir));
 }
 
+t_vec3 cam2world(const t_c *cam, const t_vec3 *dir)
+{
+	t_vec3 world_dir;
+
+	world_dir.x = dir->x * cam->right.x + dir->y * cam->up.x + dir->z * cam->dir.x;
+	world_dir.y = dir->x * cam->right.y + dir->y * cam->up.y + dir->z * cam->dir.y;
+	world_dir.z = dir->x * cam->right.z + dir->y * cam->up.z + dir->z * cam->dir.z;
+	
+	return normalized(world_dir);
+}
+
+t_vec3	set_vect_dir_cam3(t_sc *sc, int u, int v)
+{
+	t_vec3	vect_dir;
+	double	x;
+	double	y;
+	double	z;
+	double	aspect_ratio;
+
+		// Assuming FOV is in degrees
+	double fov_degrees = sc->c.fov;
+	double fov_radians = to_rad(fov_degrees); // Convert FOV to radians
+	double half_fov_radians = fov_radians * 0.5;
+
+	// Calculate the camera scale based on the FOV
+	float scale = tan(half_fov_radians);
+
+	aspect_ratio = (double)sc->r.w / (double)sc->r.h;
+	x = (2.0 * (u + 0.5) / (double)sc->r.w - 1.0) * scale * aspect_ratio;
+	y = (1.0 - 2.0 * (v + 0.5) / (double)sc->r.h) * scale;
+	z = FOCAL_DIST;
+
+	vect_dir = set_vec(x, y, z);
+	t_vec3 world_dir = cam2world(&sc->c, &vect_dir);
+	return normalized(world_dir);
+}
+
+
 t_vec3	set_vect_dir_cam2(t_sc *sc, int u, int v)
 {
 	t_vec3	vect_dir;
@@ -33,16 +71,12 @@ t_vec3	set_vect_dir_cam2(t_sc *sc, int u, int v)
 	double	c;
 	int		max;
 
-	if (sc->r.w > sc->r.h)
-	{
-		max = sc->r.w;
-	}
-	else
-	{
-		max = sc->r.h;
-	}
 	a = u + 0.5 - (sc->r.w) * 0.5;
 	b = v + 0.5 - (sc->r.h) * 0.5;
+    if (sc->r.w > sc->r.h)
+        max = sc->r.w;
+	else
+		max = sc->r.h;
 	c = max / (2 * tan((to_rad(sc->c.fov)) / 180.0));
 	vect_dir.x = 1 * a + 0 * b + 0 * c;
 	vect_dir.y = 0 * a + 1 * b + 0 * c;
@@ -87,6 +121,7 @@ void	ray_trace(t_sc scene)
 	el.p.h = 0;
 	while (el.p.h < scene.r.h)
 	{
+        el.p.w = 0;
 		while (el.p.w < scene.r.w)
 		{
 			tracing_process(&scene, &el);

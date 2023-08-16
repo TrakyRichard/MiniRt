@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_intersect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 04:24:51 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 01:36:52 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:18:02 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,18 @@ t_b	square_intersect(t_intx *intx, t_sq *sq)
 	t_sq_intx	el;
 
 	init_square_intx(&el, intx, sq, 1);
-	if (el.t < EPSILON || el.t >= intx->t)
-		return (false);
+	if (el.t < EPSILON || el.t > intx->t)
+		return false;
 	init_square_intx(&el, intx, sq, 2);
-	if (vec_dot(vec_cross(vec_minus(el.v1, el.p), \
-		vec_minus(el.v2, el.p)), sq->dir) < 0 || \
-		vec_dot(vec_cross(vec_minus(el.v2, el.p), \
-		vec_minus(el.v3, el.p)), sq->dir) < 0 || \
-		vec_dot(vec_cross(vec_minus(el.v3, el.p), \
-		vec_minus(el.v4, el.p)), sq->dir) < 0 || \
-		vec_dot(vec_cross(vec_minus(el.v4, el.p), \
-		vec_minus(el.v1, el.p)), sq->dir) < 0)
-		return (false);
-	intx->t = el.t;
-	intx->i = sq;
-	intx->type = SQUARE;
-	intx->col = sq->color;
-	return (true);
+	if ((el.proj1 >= 0 && el.proj1 <= el.width) && (el.proj2 >= 0 && el.proj2 <= el.height))
+	{
+		intx->t = el.t;
+		intx->i = sq;
+		intx->type = SQUARE;
+		intx->col = sq->color;
+		return true;
+	}
+	return false;
 }
 
 t_b	cylinder_intersect(t_intx *intx, t_cy *cy)

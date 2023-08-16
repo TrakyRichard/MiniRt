@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_intersections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
+/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 21:40:23 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 01:35:04 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:23:25 by richard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,18 @@ void	init_sphere_intx(t_sp_intx *el, t_intx *intx, t_sp *sp)
 void	init_square_intx(t_sq_intx *el, t_intx *intx, t_sq *sq, int level)
 {
 	if (level == 1)
-		el->t = vec_dot(vec_minus(sq->pos, intx->ray.orig), sq->dir) \
-		/ vec_dot(intx->ray.dir, sq->dir);
+		el->t = vec_dot(vec_minus(sq->pos, intx->ray.orig), \
+		sq->dir) / vec_dot(intx->ray.dir, sq->dir);
 	if (level == 2)
 	{
-		el->p = vec_add(intx->ray.orig, vec_scale(intx->ray.dir, el->t));
-		el->v1 = vec_minus(sq->pos, vec_scale(sq->dir, sq->side_size / 2));
-		el->v2 = vec_add(sq->pos, vec_scale(sq->dir, sq->side_size / 2));
-		el->v3 = vec_add(sq->pos, vec_scale(vec_cross(sq->dir, sq->dir), \
-		sq->side_size));
-		el->v4 = vec_minus(sq->pos, vec_scale(vec_cross(sq->dir, sq->dir), \
-		sq->side_size));
+		el->edge1 = vec_scale(normalized(vec_cross((t_vec3){0, 0, 1}, sq->dir)), sq->side_size);
+		el->edge2 = vec_scale(normalized(vec_cross(sq->dir, el->edge1)), sq->side_size);
+		el->intersection_point = vec_add(intx->ray.orig, vec_scale(intx->ray.dir, el->t));
+		el->v = vec_minus(el->intersection_point, sq->pos);
+		el->width = vec_length(el->edge1);
+		el->height = vec_length(el->edge2);
+		el->proj1 = vec_dot(el->v, el->edge1) / el->width;
+		el->proj2 = vec_dot(el->v, el->edge2) / el->height;
 	}
 }
 

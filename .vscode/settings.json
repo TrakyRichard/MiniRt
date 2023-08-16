@@ -19,6 +19,10 @@
         "iterator": "c",
         "locale": "c",
         "string": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "vec.h": "c",
+        "__locale": "c",
+        "string_view": "c",
+        "__string": "c"
     }
 }
