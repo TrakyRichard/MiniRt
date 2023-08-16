@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 04:47:19 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/13 18:45:12 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:48:39 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,18 @@ t_vec3	set_vect_dir_cam(const t_c *cam, const double i, const double j)
 	return (normalized(dir));
 }
 
-t_vec3 cam2world(const t_c *cam, const t_vec3 *dir)
+/* t_vec3	cam2world(const t_c *cam, const t_vec3 *dir)
 {
-	t_vec3 world_dir;
+	t_vec3	world_dir;
 
-	world_dir.x = dir->x * cam->right.x + dir->y * cam->up.x + dir->z * cam->dir.x;
-	world_dir.y = dir->x * cam->right.y + dir->y * cam->up.y + dir->z * cam->dir.y;
-	world_dir.z = dir->x * cam->right.z + dir->y * cam->up.z + dir->z * cam->dir.z;
-	
-	return normalized(world_dir);
+	world_dir.x = dir->x * cam->right.x + dir->y * \
+	cam->up.x + dir->z * cam->dir.x;
+	world_dir.y = dir->x * cam->right.y + dir->y * \
+	cam->up.y + dir->z * cam->dir.y;
+	world_dir.z = dir->x * cam->right.z + dir->y * \
+	cam->up.z + dir->z * cam->dir.z;
+
+	return (normalized(world_dir));
 }
 
 t_vec3	set_vect_dir_cam3(t_sc *sc, int u, int v)
@@ -44,7 +47,6 @@ t_vec3	set_vect_dir_cam3(t_sc *sc, int u, int v)
 	double	z;
 	double	aspect_ratio;
 
-		// Assuming FOV is in degrees
 	double fov_degrees = sc->c.fov;
 	double fov_radians = to_rad(fov_degrees); // Convert FOV to radians
 	double half_fov_radians = fov_radians * 0.5;
@@ -61,7 +63,7 @@ t_vec3	set_vect_dir_cam3(t_sc *sc, int u, int v)
 	t_vec3 world_dir = cam2world(&sc->c, &vect_dir);
 	return normalized(world_dir);
 }
-
+ */
 
 t_vec3	set_vect_dir_cam2(t_sc *sc, int u, int v)
 {
@@ -71,10 +73,10 @@ t_vec3	set_vect_dir_cam2(t_sc *sc, int u, int v)
 	double	c;
 	int		max;
 
-	a = u + 0.5 - (sc->r.w) * 0.5;
 	b = v + 0.5 - (sc->r.h) * 0.5;
-    if (sc->r.w > sc->r.h)
-        max = sc->r.w;
+	a = u + 0.5 - (sc->r.w) * 0.5;
+	if (sc->r.w > sc->r.h)
+		max = sc->r.w;
 	else
 		max = sc->r.h;
 	c = max / (2 * tan((to_rad(sc->c.fov)) / 180.0));
@@ -121,7 +123,7 @@ void	ray_trace(t_sc scene)
 	el.p.h = 0;
 	while (el.p.h < scene.r.h)
 	{
-        el.p.w = 0;
+		el.p.w = 0;
 		while (el.p.w < scene.r.w)
 		{
 			tracing_process(&scene, &el);

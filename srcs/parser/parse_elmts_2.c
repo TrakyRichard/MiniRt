@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elmts_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 04:20:44 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/13 12:20:53 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 03:13:18 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_b	parse_sphere(char *line, t_sc *sc)
 {
 	t_sp	*sp;
 	char	**split;
-	char 	**split_semi_colon;
+	char	**split_semi_colon;
 	size_t	length;
 
-	split_semi_colon = ft_split(line, ";"); 
+	split_semi_colon = ft_split(line, ";");
 	split = ft_split(split_semi_colon[0], WHITE_SPACES);
 	length = split_length(split);
 	if (length < 4)
@@ -43,7 +43,7 @@ t_b	parse_plane(char *line, t_sc *sc)
 {
 	t_pl	*pl;
 	char	**split;
-	char 	**split_semi_colon;
+	char	**split_semi_colon;
 	size_t	length;
 
 	split_semi_colon = ft_split(line, ";");
@@ -59,7 +59,6 @@ t_b	parse_plane(char *line, t_sc *sc)
 	pl->color = str_to_rgb(split[3]);
 	ft_unshift(&sc->shapes, (void *)pl, PLANE);
 	ft_free_dbpt(split);
-
 	return (true);
 }
 
@@ -67,7 +66,7 @@ t_b	parse_square(char *line, t_sc *sc)
 {
 	t_sq	*sq;
 	char	**split;
-	char 	**split_semi_colon;
+	char	**split_semi_colon;
 	size_t	length;
 
 	split_semi_colon = ft_split(line, ";");
@@ -90,7 +89,7 @@ t_b	parse_square(char *line, t_sc *sc)
 t_b	parse_cylinder(char *line, t_sc *sc)
 {
 	char	**split;
-	char 	**split_semi_colon;
+	char	**split_semi_colon;
 	t_cy	*cy;
 	size_t	length;
 
@@ -114,7 +113,7 @@ t_b	parse_cylinder(char *line, t_sc *sc)
 t_b	parse_triangle(char *line, t_sc *sc)
 {
 	char	**split;
-	char 	**split_semi_colon;
+	char	**split_semi_colon;
 	t_tr	*tr;
 	size_t	length;
 

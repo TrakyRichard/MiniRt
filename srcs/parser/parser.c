@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 04:20:44 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/13 12:31:03 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 03:13:28 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,44 @@ t_b	parsing_process(char *line, t_sc *sc)
 		return (false);
 }
 
-t_b	parse(int fd, t_sc *sc)
+typedef struct s_parser
 {
 	char	*line;
 	int		count;
+}	t_p;
 
-	count = 0;
-	line = get_next_line(fd);
-	while (line != NULL)
+void	init_parser(t_p *p, int fd)
+{
+	p->line = get_next_line(fd);
+	p->count = 0;
+	return ;
+}
+
+t_b	parse(int fd, t_sc *sc)
+{
+	t_p	p;
+
+	init_parser(&p, fd);
+	while (p.line != NULL)
 	{
-		if (*line == '\n')
-			count++ ;
-		if (line[0] == '#' || *line == '\n')
+		if (*p.line == '\n')
+			p.count++ ;
+		if (p.line[0] == '#' || *p.line == '\n')
 		{
-			free(line);
-			line = get_next_line(fd);
+			free(p.line);
+			p.line = get_next_line(fd);
 			continue ;
 		}
-		if (count > 3 || line[0] == '\0')
+		if (p.count > 3 || p.line[0] == '\0')
 			break ;
-		if (parsing_process(line, sc) == false)
+		if (parsing_process(p.line, sc) == false)
 		{
 			free_scene(sc);
 			return (ft_error("Parsing error\n"));
 		}
-		count = 0;
-		free(line);
-		line = get_next_line(fd);
+		free(p.line);
+		init_parser(&p, fd);
 	}
-	free(line);
+	free(p.line);
 	return (true);
 }

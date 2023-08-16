@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_intersect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 04:24:51 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/09 20:18:02 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:44:23 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,18 @@ t_b	square_intersect(t_intx *intx, t_sq *sq)
 
 	init_square_intx(&el, intx, sq, 1);
 	if (el.t < EPSILON || el.t > intx->t)
-		return false;
+		return (false);
 	init_square_intx(&el, intx, sq, 2);
-	if ((el.proj1 >= 0 && el.proj1 <= el.width) && (el.proj2 >= 0 && el.proj2 <= el.height))
+	if ((el.proj1 >= 0 && el.proj1 <= el.width) \
+		&& (el.proj2 >= 0 && el.proj2 <= el.height))
 	{
 		intx->t = el.t;
 		intx->i = sq;
 		intx->type = SQUARE;
 		intx->col = sq->color;
-		return true;
+		return (true);
 	}
-	return false;
+	return (false);
 }
 
 t_b	cylinder_intersect(t_intx *intx, t_cy *cy)

@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.h": "c",
         "*.ts": "typescript",
         "minirt.h": "c",
         "shape.h": "c",
@@ -23,6 +24,9 @@
         "vec.h": "c",
         "__locale": "c",
         "string_view": "c",
-        "__string": "c"
+        "__string": "c",
+        "__bit_reference": "c",
+        "algorithm": "c",
+        "chrono": "c"
     }
 }

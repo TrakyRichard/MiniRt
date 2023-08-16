@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 12:25:14 by ezpiro-m          #+#    #+#             */
-/*   Updated: 2023/08/13 11:51:02 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 03:15:25 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	rgb_to_int(const t_rgb rgb)
 	return (((rgb.r & 0xFF) << 16) | ((rgb.g & 0xFF) << 8) | (rgb.b & 0xFF));
 }
 
-void quit_if_parsing_failed(t_sc *sc)
+void	quit_if_parsing_failed(t_sc *sc)
 {
-	t_b is_done;
+	t_b	is_done;
 
 	is_done = true;
 	if (sc->r.h == 0 || sc->r.w == 0)
@@ -46,6 +46,17 @@ void quit_if_parsing_failed(t_sc *sc)
 		exit(1);
 }
 
+void	init_scene_and_window(t_sc *sc, int fd)
+{
+	init_scene(sc);
+	if (parse(fd, sc) == false)
+		exit(EXIT_FAILURE);
+	quit_if_parsing_failed(sc);
+	malloc_mlx_init(sc);
+	init_img(sc);
+	return ;
+}
+
 int	main(int argc, char **argv)
 {
 	t_sc	sc;
@@ -53,13 +64,8 @@ int	main(int argc, char **argv)
 	char	*title_window;
 
 	check_args(argc, argv);
-	init_scene(&sc);
 	fd = open_file(argv[1]);
-	if (parse(fd, &sc) == false)
-		return (1);
-	quit_if_parsing_failed(&sc);
-	malloc_mlx_init(&sc);
-	init_img(&sc);
+	init_scene_and_window(&sc, fd);
 	close(fd);
 	ray_trace(sc);
 	if (argc == 2)

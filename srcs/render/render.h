@@ -6,7 +6,7 @@
 /*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 04:47:19 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/07 01:39:56 by rkanmado         ###   ########.fr       */
+/*   Updated: 2023/08/16 02:35:56 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../minirt.h"
 
-t_rgb *manage_light(t_sc *scene, t_intx *intx, t_rgb *color);
+t_rgb	*manage_light(t_sc *scene, t_intx *intx, t_rgb *color);
 void	ft_put_pixel(unsigned char *data, t_r pt, const int color, \
 const t_r resolution);
 t_vec3	set_vect_dir_cam(const t_c *cam, const double i, const double j);

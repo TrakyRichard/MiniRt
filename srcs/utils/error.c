@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 12:20:26 by ezpiro-m          #+#    #+#             */
-/*   Updated: 2023/08/13 13:19:27 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:44:40 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ t_b	ft_error(char *str)
 	return (false);
 }
 
-t_b ft_split_error(char *str, char **split_array, char *line) {
-	if (line != NULL) {
+t_b	ft_split_error(char *str, char **split_array, char *line)
+{
+	if (line != NULL)
+	{
 		free(line);
 	}
-	if (split_array != NULL) {
+	if (split_array != NULL)
+	{
 		ft_free_dbpt(split_array);
 	}
 	return (ft_error(str));
@@ -30,13 +33,13 @@ t_b ft_split_error(char *str, char **split_array, char *line) {
 
 void	check_args(int arc, char *args[])
 {
-	t_b check;
-	char **split;
-	size_t length;
+	t_b		check;
+	char	**split;
+	size_t	length;
 
 	check = true;
 	if (arc < 2)
-		check =	ft_error("The .rt file is missing\n");
+		check = ft_error("The .rt file is missing\n");
 	if (arc == 2)
 	{
 		split = ft_split(args[1], ".");
@@ -44,26 +47,30 @@ void	check_args(int arc, char *args[])
 		if (length > 1)
 		{
 			if (ft_strncmp(split[length - 1], "rt", 2) != 0)
-				check =	ft_error("The .rt file is missing\n");
+				check = ft_error("The .rt file is missing\n");
 		}
 		else if (length == 1)
-			check =	ft_error("The .rt file is missing\n");
+			check = ft_error("The .rt file is missing\n");
 	}
 	if (arc > 3)
-		check =	ft_error("Can't take more than 2 arguments\n");
+		check = ft_error("Can't take more than 2 arguments\n");
 	if (arc == 3 && ft_strncmp(args[2], "--save", 6) != 0)
-		check =	ft_error("The second argument is not --save\n");
+		check = ft_error("The second argument is not --save\n");
 	if (check == false)
 		exit(EXIT_FAILURE);
-	return ;
 }
 
-size_t split_length(char **split_array) {
-    size_t length = 0;
-    if (split_array) {
-        while (split_array[length] != NULL) {
-            length++;
-        }
-    }
-    return length;
+size_t	split_length(char **split_array)
+{
+	size_t	length;
+
+	length = 0;
+	if (split_array)
+	{
+		while (split_array[length] != NULL)
+		{
+			length++;
+		}
+	}
+	return (length);
 }

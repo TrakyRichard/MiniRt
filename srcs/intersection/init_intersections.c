@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_intersections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 21:40:23 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/09 20:23:25 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 03:14:03 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ void	init_square_intx(t_sq_intx *el, t_intx *intx, t_sq *sq, int level)
 		sq->dir) / vec_dot(intx->ray.dir, sq->dir);
 	if (level == 2)
 	{
-		el->edge1 = vec_scale(normalized(vec_cross((t_vec3){0, 0, 1}, sq->dir)), sq->side_size);
-		el->edge2 = vec_scale(normalized(vec_cross(sq->dir, el->edge1)), sq->side_size);
-		el->intersection_point = vec_add(intx->ray.orig, vec_scale(intx->ray.dir, el->t));
+		el->edge1 = vec_scale(normalized(vec_cross((t_vec3){0, 0, 1}, \
+		sq->dir)), sq->side_size);
+		el->edge2 = vec_scale(normalized(vec_cross(sq->dir, el->edge1)), \
+		sq->side_size);
+		el->intersection_point = vec_add(intx->ray.orig, \
+		vec_scale(intx->ray.dir, el->t));
 		el->v = vec_minus(el->intersection_point, sq->pos);
 		el->width = vec_length(el->edge1);
 		el->height = vec_length(el->edge2);

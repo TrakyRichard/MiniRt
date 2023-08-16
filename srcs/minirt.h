@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 04:42:20 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/13 14:30:16 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 03:07:52 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ typedef struct s_square_intersection
 	double	t;
 	t_vec3	edge1;
 	t_vec3	edge2;
-	t_vec3 intersection_point;
+	t_vec3	intersection_point;
 	t_vec3	v;
 	double	width;
 	double	height;

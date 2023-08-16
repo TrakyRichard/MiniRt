@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: richard <richard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rkanmado <rkanmado@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 03:55:06 by rkanmado          #+#    #+#             */
-/*   Updated: 2023/08/13 18:05:25 by richard          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:49:15 by rkanmado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ t_rgb	*manage_light(t_sc *scene, t_intx *intx, t_rgb *color)
 
 	in_shadow = false;
 	shapes = scene->shapes.head;
-
-	(void)	shapes;
+	(void) shapes;
 	el.diffuse = set_col(0, 0, 0);
 	el.lights = scene->l.head;
 	shadow_intx.ray = intx->ray;
@@ -84,7 +83,7 @@ t_rgb	*manage_light(t_sc *scene, t_intx *intx, t_rgb *color)
 		el.light = (t_l *)(el.lights->i);
 		set_ray(&el.to_light, vec_minus(el.light->pos, get_shape_org(intx)), \
 			get_shape_org(intx), INFINITY);
-		// check_if_shape_in_shadow(intx, &in_shadow, &shadow_intx, shapes);
+		check_if_shape_in_shadow(intx, &in_shadow, &shadow_intx, shapes);
 		additional_computation_for_shadow(&el, intx, in_shadow);
 		el.lights = el.lights->next;
 	}
